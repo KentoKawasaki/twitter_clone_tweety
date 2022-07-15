@@ -7,9 +7,12 @@ if (isset($_POST['login']) && !empty($_POST['login'])) {
         $email = $getFromU->checkInput($email);
         $password = $getFromU->checkInput($password);
 
-        if (!filter_var($eamil, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $error = "Invalid format";
         } else {
+            if($getFromU->login($email, $password) === false) {
+                $error = "The email or password is incorrect!";
+            }
         }
     } else {
         $error = "Please enter username and password!";
