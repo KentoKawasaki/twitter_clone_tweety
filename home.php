@@ -5,6 +5,29 @@ $user = $getFromU->userData($user_id);
 if(!$getFromU->loggedIn()) {
     header('Location: index.php');
 }
+
+if(isset($_POST['tweet'])){
+    $status = $getFromU->checkInput($_POST['status']);
+    $tweetImage = '';
+
+    if(!empty($status) || !empty($_FILES['file']['name'][0])){
+        if(!empty($_FILES['file']['name'][0])){
+            $tweetImage = $getFromU->uploadImage($_FILES['file']);
+        }
+
+        if(strlen($status) > 140){
+            $error = "The text of your tweet is too long";
+        }else{
+            $getFromU->create('tweets', array('status' => $status, 'tweetBy' => $user_id, 'tweetImage' => $tweetImage, 'postedOn' => date('Y-m-d H:i:s')));
+            preg_match_all("/#+([a-zA-Z0-9_]+)/i", $status, $hashtag);
+            if(!empty($hashtag)){
+                $getFromT->addTrend($status);
+            }
+        }
+    }else{
+        $error = "Type or choose image to tweet";
+    }
+}
 ?>
 <!--
    This template created by Meralesson.com 
@@ -71,6 +94,7 @@ if(!$getFromU->loggedIn()) {
         </div><!-- header wrapper end -->
 
         <script type="text/javascript" src="assets/js/search.js"></script>
+        <script type="text/javascript" src="assets/js/hashtag.js"></script>
 
         <!---Inner wrapper-->
         <div class="inner-wrapper">
@@ -159,7 +183,7 @@ if(!$getFromU->loggedIn()) {
                                             <ul>
                                                 <input type="file" name="file" id="file" />
                                                 <li><label for="file"><i class="fa fa-camera" aria-hidden="true"></i></label>
-                                                    <span class="tweet-error"></span>
+                                                    <span class="tweet-error"><?php if(isset($error)){echo $error;}elseif(isset($imageError)){echo $imageError;} ?></span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -177,6 +201,7 @@ if(!$getFromU->loggedIn()) {
                             <!--Tweet SHOW WRAPPER-->
                             <div class="tweets">
                                 <!--TWEETS HERE-->
+                                <?php echo $getFromT->tweets(); ?>
                             </div>
                             <!--TWEETS SHOW WRAPPER-->
 
@@ -185,7 +210,7 @@ if(!$getFromU->loggedIn()) {
                             </div>
                             <div class="popupTweet"></div>
                             <!--Tweet END WRAPER-->
-
+                            <script type="text/javascript" src="assets/js/like.js"></script>
                         </div><!-- in left wrap-->
                     </div><!-- in center end -->
 
