@@ -7,7 +7,7 @@ $(function () {
     let button = $(this);
 
     $.post(
-      "http://localhost/tweety/core/ajax/like.php",
+      BASEURL+"core/ajax/like.php",
       { like: tweet_id, user_id: user_id },
       function () {
         button.addClass("unlike-btn");

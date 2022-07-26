@@ -11,7 +11,7 @@ $(function () {
 
       $.ajax({
         type: "POST",
-        url: "http://localhost/tweety/core/ajax/getHashtag.php",
+        url: BASEURL+"core/ajax/getHashtag.php",
         data: dataString,
         cache: false,
         success: function (data) {

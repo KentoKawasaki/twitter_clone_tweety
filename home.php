@@ -231,6 +231,12 @@ if(isset($_POST['tweet'])){
             </div><!-- in wrappper ends-->
         </div><!-- inner wrapper ends-->
     </div><!-- ends wrapper -->
+    <script src="assets/js/baseURL.js"></script>
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded',() => {
+            alert(BASEURL);
+        });
+    </script> -->
 </body>
 
 </html>
