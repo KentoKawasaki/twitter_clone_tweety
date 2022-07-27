@@ -234,7 +234,7 @@ if(isset($_POST['tweet'])){
     <script src="assets/js/baseURL.js"></script>
     <!-- <script>
         document.addEventListener('DOMContentLoaded',() => {
-            alert(BASEURL);
+            alert(baseURL);
         });
     </script> -->
 </body>
