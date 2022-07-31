@@ -55,7 +55,7 @@ class Tweet extends User {
                     <div class="t-s-f-right">
                         <ul> 
                             <li><button><i class="fa fa-share" aria-hidden="true"></i></button></li>	
-                            <li><button class="retweet" data-tweet="'.$tweet->tweetID.' data-user="'.$tweet->tweetBy.'""><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCounter"></span></button></li>
+                            <li><button class="retweet" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'""><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCounter"></span></button></li>
                             <li>'.((isset($likes['likeOn']) && $likes['likeOn'] === $tweet->tweetID) ? '<button class="unlike-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-heart" aria-hidden="true"></i><span class="likesCounter">'.(($tweet->likesCount > 0) ? $tweet->likesCount : '').'</span></button>' : '<button class="like-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="likesCounter">'.(($tweet->likesCount > 0) ? $tweet->likesCount : '').'</span></button>').'</li>
                                 <li>
                                 <a href="#" class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
@@ -117,6 +117,18 @@ class Tweet extends User {
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function retweet($tweet_id, $user_id, $get_id, $comment){
+        $stmt = $this->pdo->prepare("UPDATE `tweets` SET `retweetCount` = `retweetCount` +1 WHERE `tweetID` = :tweet_id");
+        $stmt->bindParam(":tweet_id", $tweet_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $stmt = $this->pdo->prepare("INSERT INTO `tweets` (`status`, `tweetBy`, `retweetID`, `retweetBy`, `tweetImage`, `postedOn`, `likesCount`, `retweetCount`, `retweetMsg`) SELECT `status`, `tweetBy`, `tweetID`, :user_id, `tweetImage`, CURRENT_TIMESTAMP, `likesCount`, `retweetCount`, :retweetMsg FROM `tweets` WHERE `tweetID` = :tweet_id");
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':retweetMsg', $comment, PDO::PARAM_STR);
+        $stmt->bindParam(':tweet_id', $tweet_id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 
     public function addLike($user_id, $tweet_id, $get_id){

@@ -6,6 +6,7 @@ if(isset($_POST['retweet']) && !empty($_POST['retweet'])){
     $tweet_id = $_POST['retweet'];
     $get_id = $_POST['user_id'];
     $comment = $getFromU->checkInput($_POST['comment']);
+    $getFromT->retweet($tweet_id, $user_id, $get_id, $comment);
 }
 
 if (isset($_POST['showPopup']) && !empty($_POST['showPopup'])) :
