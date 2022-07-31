@@ -201,7 +201,7 @@ if(isset($_POST['tweet'])){
                             <!--Tweet SHOW WRAPPER-->
                             <div class="tweets">
                                 <!--TWEETS HERE-->
-                                <?php echo $getFromT->tweets(); ?>
+                                <?php echo $getFromT->tweets($user_id); ?>
                             </div>
                             <!--TWEETS SHOW WRAPPER-->
 
