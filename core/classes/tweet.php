@@ -54,9 +54,9 @@ class Tweet extends User {
                 <div class="t-show-footer">
                     <div class="t-s-f-right">
                         <ul> 
-                            <li><button><a href="#"><i class="fa fa-share" aria-hidden="true"></i></a></button></li>	
-                            <li><button><a href="#"><i class="fa fa-retweet" aria-hidden="true"></i></a></button></li>
-                            <li>'.((isset($likes['likeOn']) && $likes['likeOn'] === $tweet->tweetID) ? '<button class="unlike-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a><span class="likesCounter">'.$tweet->likesCount.'</span></button>' : '<button class="like-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a><span class="likesCounter">'.(($tweet->likesCount > 0) ? $tweet->likesCount : '').'</span></button>').'</li>
+                            <li><button><i class="fa fa-share" aria-hidden="true"></i></button></li>	
+                            <li><button class="retweet" data-tweet="'.$tweet->tweetID.' data-user="'.$tweet->tweetBy.'""><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCounter"></span></button></li>
+                            <li>'.((isset($likes['likeOn']) && $likes['likeOn'] === $tweet->tweetID) ? '<button class="unlike-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-heart" aria-hidden="true"></i><span class="likesCounter">'.(($tweet->likesCount > 0) ? $tweet->likesCount : '').'</span></button>' : '<button class="like-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="likesCounter">'.(($tweet->likesCount > 0) ? $tweet->likesCount : '').'</span></button>').'</li>
                                 <li>
                                 <a href="#" class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
                                 <ul> 
@@ -109,6 +109,14 @@ class Tweet extends User {
         $tweet = preg_replace("/@([\w]+)/", "<a href='".BASE_URL."$1'>$0</a>", $tweet);
 
         return $tweet;
+    }
+
+    public function getPopupTweet($tweet_id){
+        $stmt = $this->pdo->prepare("SELECT * FROM `tweets`, `users` WHERE `tweetID` = :tweet_id AND `tweetBy` = `user_id`;");
+        $stmt->bindParam(":tweet_id", $tweet_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
     public function addLike($user_id, $tweet_id, $get_id){
