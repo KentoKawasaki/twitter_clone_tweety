@@ -61,7 +61,7 @@ class Tweet extends User
                 </div>
             </div>
         </div>
-        ' : '<div class="t-show-popup">
+        ' : '<div class="t-show-popup" data-tweet="'.$tweet->tweetID.'">
             <div class="t-show-head">
                 <div class="t-show-img">
                     <img src="' . BASE_URL . $tweet->profileImage . '"/>

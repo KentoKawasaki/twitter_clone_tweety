@@ -47,6 +47,7 @@ if(isset($_POST['tweet'])){
 
 <body>
     <div class="wrapper">
+        <h1><?php var_dump(isset($_POST['showPopup']) ? $_POST['showPopup'] : 'NONE'); ?></h1>
         <!-- header wrapper -->
         <div class="header-wrapper">
 
@@ -212,6 +213,7 @@ if(isset($_POST['tweet'])){
                             <!--Tweet END WRAPER-->
                             <script type="text/javascript" src="assets/js/like.js"></script>
                             <script type="text/javascript" src="assets/js/retweet.js"></script>
+                            <script type="text/javascript" src="assets/js/popUpTweets.js"></script>
                         </div><!-- in left wrap-->
                     </div><!-- in center end -->
 
