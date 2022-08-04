@@ -75,7 +75,7 @@ class User
         $columns = implode(', ', array_keys($fields));
         $values = ':' . implode(', :', array_keys($fields));
         $sql = "INSERT INTO {$table} ({$columns}) VALUES({$values});";
-        var_dump($sql);
+        // var_dump($sql);
         if ($stmt = $this->pdo->prepare($sql)) {
             foreach ($fields as $key => $data) {
                 $stmt->bindValue(':' . $key, $data); // 変数の中身をバインド
@@ -115,6 +115,24 @@ class User
         $count = $stmt->rowCount();
 
         return $count > 0;
+    }
+
+    public function delete($table, $array){
+        $sql = "DELETE FROM `{$table}`";
+        $where = " WHERE ";
+
+        foreach($array as $name => $value){
+            $sql .= "{$where} `{$name}` = :{$name}";
+            $where = " AND ";
+        }
+
+        if($stmt = $this->pdo->prepare($sql)){
+            foreach($array as $name => $value){
+                $stmt->bindValue(':'.$name, $value);
+            }
+            var_dump($sql);
+            $stmt->execute();
+        }
     }
 
     public function checkUsername($username)

@@ -26,7 +26,8 @@ class Tweet extends User
                     <span><i class="fa fa-retweet" aria-hidden="true"></i></span><span>' . $retweetByUser->screenName . ' Retweeted</span>
                 </div>
             </div>' : '') .
-                ((!empty($tweet->retweetMsg) && (isset($retweet['tweetID']) && $tweet->tweetID === $retweet['tweetID']) || $tweet->retweetID > 0) ? '<div class="t-show-head">
+                ((!empty($tweet->retweetMsg) && (isset($retweet['tweetID']) && $tweet->tweetID === $retweet['tweetID']) || $tweet->retweetID > 0) ? '<div class="t-show-popup" data-tweet="' . $tweet->tweetID . '">
+                <div class="t-show-head">
             <div class="t-show-img">
                 <img src="' . BASE_URL . $retweetByUser->profileImage . '"/>
             </div>
@@ -46,7 +47,7 @@ class Tweet extends User
                 <div class="retweet-t-s-b-inner">
                 ' . ((!empty($tweet->tweetImage)) ? '
                 <div class="retweet-t-s-b-inner-left">
-                    <img src="' . BASE_URL . $tweet->tweetImage . '"/>	
+                    <img src="' . BASE_URL . $tweet->tweetImage . '" class="imagePopup" data-tweet="' . $tweet->tweetID . '" />	
                 </div>' : '') . '
                     <div class="retweet-t-s-b-inner-right">
                         <div class="t-h-c-name">
@@ -61,7 +62,8 @@ class Tweet extends User
                 </div>
             </div>
         </div>
-        ' : '<div class="t-show-popup" data-tweet="'.$tweet->tweetID.'">
+        </div>
+        ' : '<div class="t-show-popup" data-tweet="' . $tweet->tweetID . '">
             <div class="t-show-head">
                 <div class="t-show-img">
                     <img src="' . BASE_URL . $tweet->profileImage . '"/>
@@ -80,7 +82,7 @@ class Tweet extends User
                     ((!empty($tweet->tweetImage)) ? '<div class="t-show-body">
             <div class="t-s-b-inner">
              <div class="t-s-b-inner-in">
-               <img src="' . BASE_URL . $tweet->tweetImage . '" class="imagePopup"/>
+               <img src="' . BASE_URL . $tweet->tweetImage . '" class="imagePopup" data-tweet="' . $tweet->tweetID . '"/>
              </div>
             </div>
           </div>' : '') . '
@@ -92,12 +94,12 @@ class Tweet extends User
                             <li><button><i class="fa fa-share" aria-hidden="true"></i></button></li>	
                             <li>' . ((isset($retweet['retweetID']) && $tweet->tweetID === $retweet['retweetID']) ? '<button class="retweeted" data-tweet="' . $tweet->tweetID . '" data-user="' . $tweet->tweetBy . '""><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCounter">' . $tweet->retweetCount . '</span></button>' : '<button class="retweet" data-tweet="' . $tweet->tweetID . '" data-user="' . $tweet->tweetBy . '""><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCounter">' . (($tweet->retweetCount > 0) ? $tweet->retweetCount : '') . '</span></button>') . '</li>
                             <li>' . ((isset($likes['likeOn']) && $likes['likeOn'] === $tweet->tweetID) ? '<button class="unlike-btn" data-tweet="' . $tweet->tweetID . '" data-user="' . $tweet->tweetBy . '"><i class="fa fa-heart" aria-hidden="true"></i><span class="likesCounter">' . (($tweet->likesCount > 0) ? $tweet->likesCount : '') . '</span></button>' : '<button class="like-btn" data-tweet="' . $tweet->tweetID . '" data-user="' . $tweet->tweetBy . '"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="likesCounter">' . (($tweet->likesCount > 0) ? $tweet->likesCount : '') . '</span></button>') . '</li>
-                                <li>
-                                <a href="#" class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                                <ul> 
-                                  <li><label class="deleteTweet">Delete Tweet</label></li>
-                                </ul>
-                            </li>
+                            '.(($tweet->tweetBy === $user_id) ? '<li>
+                            <a href="#" class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                            <ul> 
+                              <li><label class="deleteTweet" data-tweet="'.$tweet->tweetID.'">Delete Tweet</label></li>
+                            </ul>
+                        </li>' : '').'
                         </ul>
                     </div>
                 </div>
@@ -180,6 +182,15 @@ class Tweet extends User
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function comments($tweet_id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM `comments` LEFT JOIN `users` ON `commentBy` = `user_id` WHERE `commentOn` = :tweet_id;");
+        $stmt->bindParam(":tweet_id", $tweet_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function addLike($user_id, $tweet_id, $get_id)

@@ -5,7 +5,7 @@ $user = $getFromU->userData($user_id);
 if(!$getFromU->loggedIn()) {
     header('Location: index.php');
 }
-
+$getFromU->delete('comments', array('commentID' => '1'));
 if(isset($_POST['tweet'])){
     $status = $getFromU->checkInput($_POST['status']);
     $tweetImage = '';
@@ -47,7 +47,6 @@ if(isset($_POST['tweet'])){
 
 <body>
     <div class="wrapper">
-        <h1><?php var_dump(isset($_POST['showPopup']) ? $_POST['showPopup'] : 'NONE'); ?></h1>
         <!-- header wrapper -->
         <div class="header-wrapper">
 
@@ -214,6 +213,8 @@ if(isset($_POST['tweet'])){
                             <script type="text/javascript" src="assets/js/like.js"></script>
                             <script type="text/javascript" src="assets/js/retweet.js"></script>
                             <script type="text/javascript" src="assets/js/popUpTweets.js"></script>
+                            <script type="text/javascript" src="assets/js/delete.js"></script>
+                            <script type="text/javascript" src="assets/js/comment.js"></script>
                         </div><!-- in left wrap-->
                     </div><!-- in center end -->
 

@@ -12,4 +12,15 @@ $(function () {
       }
     );
   });
+
+  $(document).on('click', '.imagePopup', function(e){
+    e.stopPropagation();
+    let tweet_id = $(this).data('tweet');
+    $.post(baseURL + "core/ajax/imagePopup.php", {showImage:tweet_id}, function(data){
+      $('.popupTweet').html(data);
+      $('.close-imagePopup').click(function(){
+        $('.img-popup').hide();
+      });
+    });
+  });
 });
