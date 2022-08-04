@@ -130,7 +130,7 @@ class User
             foreach($array as $name => $value){
                 $stmt->bindValue(':'.$name, $value);
             }
-            var_dump($sql);
+            // var_dump($sql);
             $stmt->execute();
         }
     }
@@ -185,7 +185,8 @@ class User
             if ($error === 0) {
                 if ($fileSize <= 209272152) {
                     $fileRoot = 'users/' . $filename;
-                    move_uploaded_file($fileTmp, $fileRoot);
+                    $projectName = explode('/', $_SERVER['REQUEST_URI'])[1];
+                    move_uploaded_file($fileTmp, $_SERVER['DOCUMENT_ROOT'].'/'.$projectName.'/'.$fileRoot);
                     return $fileRoot;
                 } else {
                     $GLOBALS['imageError'] = "The file size is too large";

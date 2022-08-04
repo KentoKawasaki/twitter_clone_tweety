@@ -215,6 +215,7 @@ if(isset($_POST['tweet'])){
                             <script type="text/javascript" src="assets/js/popUpTweets.js"></script>
                             <script type="text/javascript" src="assets/js/delete.js"></script>
                             <script type="text/javascript" src="assets/js/comment.js"></script>
+                            <script type="text/javascript" src="assets/js/popUpForm.js"></script>
                         </div><!-- in left wrap-->
                     </div><!-- in center end -->
 
