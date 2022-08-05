@@ -88,7 +88,7 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
                                 TWEETS
                             </div>
                             <div class="n-bottom">
-                                0
+                                <?php $getFromT->countTweets($user_id); ?>
                             </div>
                         </li>
                         <li>
@@ -117,7 +117,7 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
                                     LIKES
                                 </div>
                                 <div class="n-bottom">
-                                    0
+                                <?php $getFromT->countLikes($user_id); ?>
                                 </div>
                             </a>
                         </li>

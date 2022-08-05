@@ -17,12 +17,13 @@ class User
         return $var;
     }
 
-    public function search($search){
+    public function search($search)
+    {
         $stmt = $this->pdo->prepare("SELECT `user_id`, `username`, `screenName`, `profileImage`, `profileCover` FROM `users` WHERE `username` LIKE ? OR `screenName` LIKE ?;");
-        $stmt->bindValue(1, $search.'%', PDO::PARAM_STR);
-        $stmt->bindValue(2, $search.'%', PDO::PARAM_STR);
+        $stmt->bindValue(1, $search . '%', PDO::PARAM_STR);
+        $stmt->bindValue(2, $search . '%', PDO::PARAM_STR);
         $stmt->execute();
-        
+
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
     public function login($email, $password)
@@ -117,18 +118,19 @@ class User
         return $count > 0;
     }
 
-    public function delete($table, $array){
+    public function delete($table, $array)
+    {
         $sql = "DELETE FROM `{$table}`";
         $where = " WHERE ";
 
-        foreach($array as $name => $value){
+        foreach ($array as $name => $value) {
             $sql .= "{$where} `{$name}` = :{$name}";
             $where = " AND ";
         }
 
-        if($stmt = $this->pdo->prepare($sql)){
-            foreach($array as $name => $value){
-                $stmt->bindValue(':'.$name, $value);
+        if ($stmt = $this->pdo->prepare($sql)) {
+            foreach ($array as $name => $value) {
+                $stmt->bindValue(':' . $name, $value);
             }
             // var_dump($sql);
             $stmt->execute();
@@ -186,7 +188,7 @@ class User
                 if ($fileSize <= 209272152) {
                     $fileRoot = 'users/' . $filename;
                     $projectName = explode('/', $_SERVER['REQUEST_URI'])[1];
-                    move_uploaded_file($fileTmp, $_SERVER['DOCUMENT_ROOT'].'/'.$projectName.'/'.$fileRoot);
+                    move_uploaded_file($fileTmp, $_SERVER['DOCUMENT_ROOT'] . '/' . $projectName . '/' . $fileRoot);
                     return $fileRoot;
                 } else {
                     $GLOBALS['imageError'] = "The file size is too large";
@@ -194,6 +196,36 @@ class User
             }
         } else {
             $GLOBALS['imageError'] = "The extension is not allowed";
+        }
+    }
+
+    public function timeAgo($datetime)
+    {
+        $time = strtotime($datetime);
+        $current = time();
+        $seconds = $current - $time;
+        $minutes = floor(strval($seconds / 60));
+        $hours = floor(strval($seconds / 3600));
+        $months = floor(strval($seconds / 2600640));
+
+        if ($seconds <= 60) {
+            if ($seconds == 0) {
+
+                return 'now';
+            }
+            return $seconds . 's';
+        } elseif ($minutes <= 60) {
+
+            return $minutes . 'm';
+        } elseif ($hours <= 24) {
+
+            return $hours . 'h';
+        } elseif ($months <= 12) {
+
+            return date('M j', $time);
+        } else {
+
+            return date('j M Y', $time);
         }
     }
 }
