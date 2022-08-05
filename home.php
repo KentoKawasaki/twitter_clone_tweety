@@ -201,7 +201,7 @@ if(isset($_POST['tweet'])){
                             <!--Tweet SHOW WRAPPER-->
                             <div class="tweets">
                                 <!--TWEETS HERE-->
-                                <?php echo $getFromT->tweets($user_id); ?>
+                                <?php echo $getFromT->tweets($user_id, 1); ?>
                             </div>
                             <!--TWEETS SHOW WRAPPER-->
 
@@ -216,6 +216,7 @@ if(isset($_POST['tweet'])){
                             <script type="text/javascript" src="assets/js/delete.js"></script>
                             <script type="text/javascript" src="assets/js/comment.js"></script>
                             <script type="text/javascript" src="assets/js/popUpForm.js"></script>
+                            <script type="text/javascript" src="assets/js/fetch.js"></script>
                         </div><!-- in left wrap-->
                     </div><!-- in center end -->
 

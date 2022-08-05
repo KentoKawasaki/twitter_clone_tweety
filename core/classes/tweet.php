@@ -7,10 +7,11 @@ class Tweet extends User
         $this->pdo = $pdo;
     }
 
-    public function tweets($user_id)
+    public function tweets($user_id, $num)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM `tweets` LEFT JOIN `users` ON `tweetBy` = `user_id` WHERE `tweetBy` = :user_id AND `retweetID` = '0' OR `tweetBy` = `user_id` AND `retweetBy` <> :user_id;");
+        $stmt = $this->pdo->prepare("SELECT * FROM `tweets` LEFT JOIN `users` ON `tweetBy` = `user_id` WHERE `tweetBy` = :user_id AND `retweetID` = '0' OR `tweetBy` = `user_id` AND `retweetBy` <> :user_id LIMIT :num;");
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':num', $num, PDO::PARAM_INT);
         $stmt->execute();
         $tweets = $stmt->fetchAll(PDO::FETCH_OBJ);
 
