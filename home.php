@@ -5,7 +5,6 @@ $user = $getFromU->userData($user_id);
 if(!$getFromU->loggedIn()) {
     header('Location: index.php');
 }
-$getFromU->delete('comments', array('commentID' => '1'));
 if(isset($_POST['tweet'])){
     $status = $getFromU->checkInput($_POST['status']);
     $tweetImage = '';
