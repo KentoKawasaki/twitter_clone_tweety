@@ -27,6 +27,8 @@ if(isset($_POST['tweet'])){
     }else{
         $error = "Type or choose image to tweet";
     }
+
+    header('Location: home.php');
 }
 ?>
 <!--
@@ -201,7 +203,7 @@ if(isset($_POST['tweet'])){
                             <!--Tweet SHOW WRAPPER-->
                             <div class="tweets">
                                 <!--TWEETS HERE-->
-                                <?php echo $getFromT->tweets($user_id, 1); ?>
+                                <?php echo $getFromT->tweets($user_id, 10); ?>
                             </div>
                             <!--TWEETS SHOW WRAPPER-->
 
