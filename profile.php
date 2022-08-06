@@ -124,7 +124,7 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
                     </ul>
                     <div class="edit-button">
                         <span>
-                            <button class="f-btn follow-btn" data-follow="user_id" data-user="user_id"><i class="fa fa-user-plus"></i> Follow </button>
+                            <?php $getFromF->followBin($profileId, $user_id); ?>
                         </span>
                     </div>
                 </div>
