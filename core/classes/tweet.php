@@ -50,14 +50,14 @@ class Tweet extends User
                 <div class="retweet-t-s-b-inner-left">
                     <img src="' . BASE_URL . $tweet->tweetImage . '" class="imagePopup" data-tweet="' . $tweet->tweetID . '" />	
                 </div>' : '') . '
-                    <div class="retweet-t-s-b-inner-right">
+                    <div>
                         <div class="t-h-c-name">
                             <span><a href="' . BASE_URL . $tweet->username . '">' . $tweet->screenName . '</a></span>
                             <span>@' . $tweet->username . '</span>
                             <span>' . $this->timeAgo($tweet->postedOn) . '</span>
                         </div>
                         <div class="retweet-t-s-b-inner-right-text">		
-                            ' . $tweet->status . '
+                            ' . $this->getTweetLinks($tweet->status) . '
                         </div>
                     </div>
                 </div>
@@ -168,7 +168,7 @@ class Tweet extends User
         $stmt->bindParam(":tweet_id", $tweet_id, PDO::PARAM_INT);
         $stmt->execute();
 
-        $stmt = $this->pdo->prepare("INSERT INTO `tweets` (`status`, `tweetBy`, `retweetID`, `retweetBy`, `tweetImage`, `postedOn`, `likesCount`, `retweetCount`, `retweetMsg`) SELECT `status`, `tweetBy`, `tweetID`, :user_id, `tweetImage`, CURRENT_TIMESTAMP, `likesCount`, `retweetCount`, :retweetMsg FROM `tweets` WHERE `tweetID` = :tweet_id");
+        $stmt = $this->pdo->prepare("INSERT INTO `tweets` (`status`, `tweetBy`, `retweetID`, `retweetBy`, `tweetImage`, `postedOn`, `likesCount`, `retweetCount`, `retweetMsg`) SELECT `status`, `tweetBy`, `tweetID`, :user_id, `tweetImage`, `postedOn`, `likesCount`, `retweetCount`, :retweetMsg FROM `tweets` WHERE `tweetID` = :tweet_id");
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindParam(':retweetMsg', $comment, PDO::PARAM_STR);
         $stmt->bindParam(':tweet_id', $tweet_id, PDO::PARAM_INT);

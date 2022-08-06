@@ -262,7 +262,7 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
                                 <div class="t-h-c-name">
                                     <span><a href="' . BASE_URL . $retweetByUser->username . '">' . $retweetByUser->screenName . '</a></span>
                                     <span>@' . $retweetByUser->username . '</span>
-                                    <span>' . $getFromU->timeAgo($retweet['postedOn']) . '</span>
+                                    <span>' . $getFromU->timeAgo($tweet->postedOn) . '</span>
                                 </div>
                                 <div class="t-h-c-dis">
                                     ' . $getFromT->getTweetLinks($tweet->retweetMsg) . '
@@ -276,14 +276,14 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
                                 <div class="retweet-t-s-b-inner-left">
                                     <img src="' . BASE_URL . $tweet->tweetImage . '" class="imagePopup" data-tweet="' . $tweet->tweetID . '" />	
                                 </div>' : '') . '
-                                    <div class="retweet-t-s-b-inner-right">
+                                    <div">
                                         <div class="t-h-c-name">
                                             <span><a href="' . BASE_URL . $tweet->username . '">' . $tweet->screenName . '</a></span>
                                             <span>@' . $tweet->username . '</span>
                                             <span>' . $getFromU->timeAgo($tweet->postedOn) . '</span>
                                         </div>
                                         <div class="retweet-t-s-b-inner-right-text">		
-                                            ' . $tweet->status . '
+                                            ' . $getFromT->getTweetLinks($tweet->status) . '
                                         </div>
                                     </div>
                                 </div>
@@ -318,15 +318,18 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
                                 <div class="t-show-footer">
                                     <div class="t-s-f-right">
                                         <ul> 
-                                            <li><button><i class="fa fa-share" aria-hidden="true"></i></button></li>	
-                                            <li>' . ((isset($retweet['retweetID']) && $tweet->tweetID === $retweet['retweetID'] || isset($retweet['retweetBy']) &&$user_id === $retweet['retweetBy']) ? '<button class="retweeted" data-tweet="' . $tweet->tweetID . '" data-user="' . $tweet->tweetBy . '""><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCounter">' . $tweet->retweetCount . '</span></button>' : '<button class="retweet" data-tweet="' . $tweet->tweetID . '" data-user="' . $tweet->tweetBy . '""><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCounter">' . (($tweet->retweetCount > 0) ? $tweet->retweetCount : '') . '</span></button>') . '</li>
-                                            <li>' . ((isset($likes['likeOn']) && $likes['likeOn'] === $tweet->tweetID) ? '<button class="unlike-btn" data-tweet="' . $tweet->tweetID . '" data-user="' . $tweet->tweetBy . '"><i class="fa fa-heart" aria-hidden="true"></i><span class="likesCounter">' . (($tweet->likesCount > 0) ? $tweet->likesCount : '') . '</span></button>' : '<button class="like-btn" data-tweet="' . $tweet->tweetID . '" data-user="' . $tweet->tweetBy . '"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="likesCounter">' . (($tweet->likesCount > 0) ? $tweet->likesCount : '') . '</span></button>') . '</li>
-                                            ' . (($tweet->tweetBy === $user_id) ? '<li>
-                                            <a href="#" class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                                            <ul> 
-                                              <li><label class="deleteTweet" data-tweet="' . $tweet->tweetID . '">Delete Tweet</label></li>
-                                            </ul>
-                                        </li>' : '') . '
+                                        '.(($getFromU->loggedIn()) ? '<li><button><i class="fa fa-share" aria-hidden="true"></i></button></li>	
+                                        <li>' . ((isset($retweet['retweetID']) && $tweet->tweetID === $retweet['retweetID'] || isset($retweet['retweetBy']) &&$user_id === $retweet['retweetBy']) ? '<button class="retweeted" data-tweet="' . $tweet->tweetID . '" data-user="' . $tweet->tweetBy . '""><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCounter">' . $tweet->retweetCount . '</span></button>' : '<button class="retweet" data-tweet="' . $tweet->tweetID . '" data-user="' . $tweet->tweetBy . '""><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCounter">' . (($tweet->retweetCount > 0) ? $tweet->retweetCount : '') . '</span></button>') . '</li>
+                                        <li>' . ((isset($likes['likeOn']) && $likes['likeOn'] === $tweet->tweetID) ? '<button class="unlike-btn" data-tweet="' . $tweet->tweetID . '" data-user="' . $tweet->tweetBy . '"><i class="fa fa-heart" aria-hidden="true"></i><span class="likesCounter">' . (($tweet->likesCount > 0) ? $tweet->likesCount : '') . '</span></button>' : '<button class="like-btn" data-tweet="' . $tweet->tweetID . '" data-user="' . $tweet->tweetBy . '"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="likesCounter">' . (($tweet->likesCount > 0) ? $tweet->likesCount : '') . '</span></button>') . '</li>
+                                        ' . (($tweet->tweetBy === $user_id) ? '<li>
+                                        <a href="#" class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                        <ul> 
+                                          <li><label class="deleteTweet" data-tweet="' . $tweet->tweetID . '">Delete Tweet</label></li>
+                                        </ul>
+                                    </li>' : '') : '<li><button><i class="fa fa-share" aria-hidden="true"></i></button></li>
+                                    <li><button><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCounter">' . (($tweet->retweetCount > 0) ? $tweet->retweetCount : '') . '</span></button></li>
+                                    <li><button><i class="fa fa-heart" aria-hidden="true"></i><span class="likesCounter">' . (($tweet->likesCount > 0) ? $tweet->likesCount : '') . '</span></button></li>
+                                    '). '
                                         </ul>
                                     </div>
                                 </div>
