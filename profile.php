@@ -375,7 +375,7 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
     <script type="text/javascript" src="assets/js/fetch.js"></script>
     <script type="text/javascript" src="assets/js/search.js"></script>
     <script type="text/javascript" src="assets/js/hashtag.js"></script>
-
+    <script type="text/javascript" src="assets/js/follow.js"></script>
 </body>
 
 </html>
