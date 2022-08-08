@@ -1,10 +1,12 @@
 $(function () {
   $(".follow-btn").click(function () {
     let follow_id = $(this).data("follow");
+    let profile = $(this).data("profile");
     let button = $(this);
 
     if (button.hasClass("following-btn")) {
-      $.post(baseURL + "core/ajax/followingFollowers.php", {unfollow:follow_id}, function(data){
+      $.post(baseURL + "core/ajax/followingFollowers.php", {unfollow:follow_id, profile:profile}, function(data){
+        console.log(data);
         data = JSON.parse(data);
         button.removeClass("following-btn");
         button.removeClass("unfollow-btn");
@@ -13,7 +15,8 @@ $(function () {
         $('.count-followers').text(data.followers);
       });
     } else {
-      $.post(baseURL + "core/ajax/followingFollowers.php", {follow:follow_id}, function(data){
+      $.post(baseURL + "core/ajax/followingFollowers.php", {follow:follow_id, profile:profile}, function(data){
+        console.log(data);
         data = JSON.parse(data);
         button.removeClass("follow-btn");
         button.addClass("following-btn");
