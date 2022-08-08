@@ -8,8 +8,10 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
     $user = $getFromU->userData($user_id);
 
     if (!$profileData) {
-        header('Location: index.php');
+        header('Location: '.BASE_URL.'index.php');
     }
+}else{
+    header('Location: '.BASE_URL.'index.php');
 }
 ?>
 <!--
@@ -365,17 +367,17 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
         <!-- in wrappper ends-->
     </div>
     <!-- ends wrapper -->
-    <script src="assets/js/baseURL.js"></script>
-    <script type="text/javascript" src="assets/js/like.js"></script>
-    <script type="text/javascript" src="assets/js/retweet.js"></script>
-    <script type="text/javascript" src="assets/js/popUpTweets.js"></script>
-    <script type="text/javascript" src="assets/js/delete.js"></script>
-    <script type="text/javascript" src="assets/js/comment.js"></script>
-    <script type="text/javascript" src="assets/js/popUpForm.js"></script>
-    <script type="text/javascript" src="assets/js/fetch.js"></script>
-    <script type="text/javascript" src="assets/js/search.js"></script>
-    <script type="text/javascript" src="assets/js/hashtag.js"></script>
-    <script type="text/javascript" src="assets/js/follow.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/baseURL.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/search.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/hashtag.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/like.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/retweet.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/popUpTweets.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/delete.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/comment.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/popUpForm.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/fetch.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/follow.js"></script>
 </body>
 
 </html>

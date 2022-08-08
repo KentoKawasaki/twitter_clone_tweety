@@ -2,28 +2,28 @@
 include 'core/init.php';
 $user_id = $_SESSION['user_id'];
 $user = $getFromU->userData($user_id);
-if(!$getFromU->loggedIn()) {
+if (!$getFromU->loggedIn()) {
     header('Location: index.php');
 }
-if(isset($_POST['tweet'])){
+if (isset($_POST['tweet'])) {
     $status = $getFromU->checkInput($_POST['status']);
     $tweetImage = '';
 
-    if(!empty($status) || !empty($_FILES['file']['name'][0])){
-        if(!empty($_FILES['file']['name'][0])){
+    if (!empty($status) || !empty($_FILES['file']['name'][0])) {
+        if (!empty($_FILES['file']['name'][0])) {
             $tweetImage = $getFromU->uploadImage($_FILES['file']);
         }
 
-        if(strlen($status) > 140){
+        if (strlen($status) > 140) {
             $error = "The text of your tweet is too long";
-        }else{
+        } else {
             $getFromU->create('tweets', array('status' => $status, 'tweetBy' => $user_id, 'tweetImage' => $tweetImage, 'postedOn' => date('Y-m-d H:i:s')));
             preg_match_all("/#+([a-zA-Z0-9_]+)/i", $status, $hashtag);
-            if(!empty($hashtag)){
+            if (!empty($hashtag)) {
                 $getFromT->addTrend($status);
             }
         }
-    }else{
+    } else {
         $error = "Type or choose image to tweet";
     }
 
@@ -72,12 +72,12 @@ if(isset($_POST['tweet'])){
                                 </div>
                             </li>
 
-                            <li class="hover"><label class="drop-label" for="drop-wrap1"><img src="<?php  echo $user->profileImage; ?>" /></label>
+                            <li class="hover"><label class="drop-label" for="drop-wrap1"><img src="<?php echo $user->profileImage; ?>" /></label>
                                 <input type="checkbox" id="drop-wrap1">
                                 <div class="drop-wrap">
                                     <div class="drop-inner">
                                         <ul>
-                                            <li><a href="<?php  echo $user->username; ?>"><?php  echo $user->username; ?></a></li>
+                                            <li><a href="<?php echo $user->username; ?>"><?php echo $user->username; ?></a></li>
                                             <li><a href="settings/account">Settings</a></li>
                                             <li><a href="includes/logout.php">Log out</a></li>
                                         </ul>
@@ -94,9 +94,6 @@ if(isset($_POST['tweet'])){
 
         </div><!-- header wrapper end -->
 
-        <script type="text/javascript" src="assets/js/search.js"></script>
-        <script type="text/javascript" src="assets/js/hashtag.js"></script>
-
         <!---Inner wrapper-->
         <div class="inner-wrapper">
             <div class="in-wrapper">
@@ -107,19 +104,19 @@ if(isset($_POST['tweet'])){
                                 <div class="info-inner">
                                     <div class="info-in-head">
                                         <!-- PROFILE-COVER-IMAGE -->
-                                        <img src="<?php  echo $user->profileCover; ?>" />
+                                        <img src="<?php echo $user->profileCover; ?>" />
                                     </div><!-- info in head end -->
                                     <div class="info-in-body">
                                         <div class="in-b-box">
                                             <div class="in-b-img">
                                                 <!-- PROFILE-IMAGE -->
-                                                <img src="<?php  echo $user->profileImage; ?>" />
+                                                <img src="<?php echo $user->profileImage; ?>" />
                                             </div>
                                         </div><!--  in b box end-->
                                         <div class="info-body-name">
                                             <div class="in-b-name">
-                                                <div><a href="<?php  echo $user->username; ?>"><?php  echo $user->screenName; ?></a></div>
-                                                <span><small><a href="<?php  echo $user->username; ?>">@<?php  echo $user->username; ?></a></small></span>
+                                                <div><a href="<?php echo $user->username; ?>"><?php echo $user->screenName; ?></a></div>
+                                                <span><small><a href="<?php echo $user->username; ?>">@<?php echo $user->username; ?></a></small></span>
                                             </div><!-- in b name end-->
                                         </div><!-- info body name end-->
                                     </div><!-- info in body end-->
@@ -168,7 +165,7 @@ if(isset($_POST['tweet'])){
                                     <div class="tweet-h-left">
                                         <div class="tweet-h-img">
                                             <!-- PROFILE-IMAGE -->
-                                            <img src="<?php  echo $user->profileImage; ?>" />
+                                            <img src="<?php echo $user->profileImage; ?>" />
                                         </div>
                                     </div>
                                     <div class="tweet-body">
@@ -184,7 +181,11 @@ if(isset($_POST['tweet'])){
                                             <ul>
                                                 <input type="file" name="file" id="file" />
                                                 <li><label for="file"><i class="fa fa-camera" aria-hidden="true"></i></label>
-                                                    <span class="tweet-error"><?php if(isset($error)){echo $error;}elseif(isset($imageError)){echo $imageError;} ?></span>
+                                                    <span class="tweet-error"><?php if (isset($error)) {
+                                                                                    echo $error;
+                                                                                } elseif (isset($imageError)) {
+                                                                                    echo $imageError;
+                                                                                } ?></span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -211,14 +212,6 @@ if(isset($_POST['tweet'])){
                             </div>
                             <div class="popupTweet"></div>
                             <!--Tweet END WRAPER-->
-                            <script type="text/javascript" src="assets/js/like.js"></script>
-                            <script type="text/javascript" src="assets/js/retweet.js"></script>
-                            <script type="text/javascript" src="assets/js/popUpTweets.js"></script>
-                            <script type="text/javascript" src="assets/js/delete.js"></script>
-                            <script type="text/javascript" src="assets/js/comment.js"></script>
-                            <script type="text/javascript" src="assets/js/popUpForm.js"></script>
-                            <script type="text/javascript" src="assets/js/fetch.js"></script>
-                            <script type="text/javascript" src="assets/js/follow.js"></script>
 
                         </div><!-- in left wrap-->
                     </div><!-- in center end -->
@@ -241,7 +234,17 @@ if(isset($_POST['tweet'])){
             </div><!-- in wrappper ends-->
         </div><!-- inner wrapper ends-->
     </div><!-- ends wrapper -->
-    <script src="assets/js/baseURL.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/baseURL.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/search.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/hashtag.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/like.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/retweet.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/popUpTweets.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/delete.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/comment.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/popUpForm.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/fetch.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/follow.js"></script>
     <!-- <script>
         document.addEventListener('DOMContentLoaded',() => {
             alert(baseURL);

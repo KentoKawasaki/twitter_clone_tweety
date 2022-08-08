@@ -204,6 +204,10 @@ if(isset($_POST['submit'])){
         <!--CONTAINER_WRAP ENDS-->
 
     </div><!-- ends wrapper -->
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/baseURL.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/search.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/hashtag.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/popUpForm.js"></script>
 </body>
 
 </html>

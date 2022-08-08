@@ -7,16 +7,22 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
     $user_id = $_SESSION['user_id'];
     $user = $getFromU->userData($user_id);
 
-    if (!$profileData) {
-        header('Location: index.php');
+    if ($getFromU->loggedIn() === false){
+        header('Location: '.BASE_URL.'index.php');
     }
+
+    if (!$profileData) {
+        header('Location: '.BASE_URL.'index.php');
+    }
+}else {
+    header('Location: '.BASE_URL.'index.php');
 }
 ?>
 <!doctype html>
 <html>
 
 <head>
-    <title>twitter</title>
+    <title>People followed by <?php  echo $profileData->screenName.'(@'.$profileData->username.')'; ?></title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style-complete.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css" />
@@ -218,6 +224,7 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
                                             <!-- <li><img src="#"/></li> -->
                                         </ul>
                                     </div>
+                                    <?php $getFromF->whoToFollow($user_id, $user_id); ?>
                                 </div>
 
                             </div>
@@ -246,6 +253,15 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
 
     </div><!-- ends wrapper -->
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/baseURL.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/search.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/hashtag.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/like.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/retweet.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/popUpTweets.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/delete.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/comment.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/popUpForm.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/fetch.js"></script>
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/follow.js"></script>
 </body>
 
