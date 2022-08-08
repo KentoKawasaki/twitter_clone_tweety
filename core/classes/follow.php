@@ -35,7 +35,7 @@ class Follow extends Tweet {
     }
 
     public function follow($follow_id, $user_id, $profile_id){
-        $this->create('follow', array('sender' => $user_id, 'receiver' => $follow_id, 'followOn' => date("Y-M-D H:i:s")));
+        $this->create('follow', array('sender' => $user_id, 'receiver' => $follow_id, 'followOn' => date("Y-m-d H:i:s")));
         $this->addFollowCount($follow_id, $user_id);
         $stmt = $this->pdo->prepare("SELECT `user_id`, `following`, `followers` FROM `users` LEFT JOIN `follow` ON `sender` = `user_id` AND CASE WHEN `receiver` = :user_id THEN `sender` = `user_id` END WHERE `user_id` = :profile_id;");
         $stmt->execute(array("user_id" => $user_id, "profile_id" => $profile_id));
@@ -136,5 +136,29 @@ class Follow extends Tweet {
             </div>
         </div>';
         }
+    }
+
+    public function whoToFollow($user_id, $profile_id){
+        $stmt = $this->pdo->prepare("SELECT * FROM `users` WHERE `user_id` <> :user_id AND `user_id` NOT IN (SELECT `receiver` FROM `follow` WHERE `sender` = :user_id) ORDER BY rand() LIMIT 3;");
+        $stmt->bindParam(":user_id", $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        echo '<div class="follow-wrap"><div class="follow-inner"><div class="follow-title"><h3>Who to follow</h3></div>';
+        foreach ($data as $user){
+            echo '<div class="follow-body">
+            <div class="follow-img">
+              <img src="'.BASE_URL.$user->profileImage.'"/>
+            </div>
+            <div class="follow-content">
+                <div class="fo-co-head">
+                    <a href="'.BASE_URL.$user->username.'">'.$user->screenName.'</a><span>@'.$user->username.'</span>
+                </div>
+                <!-- FOLLOW BUTTON -->
+                '.$this->followBtn($user->user_id, $user_id, $profile_id).'
+            </div>
+        </div>';
+        }
+        echo '</div></div>';
     }
 }

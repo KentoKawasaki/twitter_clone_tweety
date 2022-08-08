@@ -218,6 +218,8 @@ if(isset($_POST['tweet'])){
                             <script type="text/javascript" src="assets/js/comment.js"></script>
                             <script type="text/javascript" src="assets/js/popUpForm.js"></script>
                             <script type="text/javascript" src="assets/js/fetch.js"></script>
+                            <script type="text/javascript" src="assets/js/follow.js"></script>
+
                         </div><!-- in left wrap-->
                     </div><!-- in center end -->
 
@@ -226,6 +228,7 @@ if(isset($_POST['tweet'])){
 
                             <!--Who To Follow-->
                             <!--WHO_TO_FOLLOW HERE-->
+                            <?php $getFromF->whoToFollow($user_id, $user_id); ?>
                             <!--Who To Follow-->
 
                         </div><!-- in left wrap-->
