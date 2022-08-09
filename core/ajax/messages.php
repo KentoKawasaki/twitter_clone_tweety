@@ -112,6 +112,7 @@ if (isset($_POST['showMessage']) && !empty($_POST['showMessage'])) :
 if(isset($_POST['showChatPopup']) && !empty($_POST['showChatPopup'])):
     $messageFrom = $_POST['showChatPopup'];
     $user_id = $_SESSION['user_id'];
+    $user = $getFromU->userData($messageFrom);
 ?>
 <!-- MESSAGE CHAT START -->
 <div class="popup-message-body-wrap">
@@ -125,7 +126,7 @@ if(isset($_POST['showChatPopup']) && !empty($_POST['showChatPopup'])):
 		</div>
 		<div class="message-h-cen">
 			<div class="message-head-img">
-			<img src="PROFILE-IMAGE"/><h4>Messages</h4>
+			<img src="<?php echo BASE_URL.$user->profileImage; ?>"/><h4>Messages</h4>
 			</div>
 		</div>
 		<div class="message-h-right">
@@ -146,7 +147,7 @@ if(isset($_POST['showChatPopup']) && !empty($_POST['showChatPopup'])):
 		</div>
 	</div>
 	<div class="main-msg-wrap">
-      <div class="main-msg-inner">
+      <div id="chat" class="main-msg-inner">
      
  	  </div>
 	</div>
