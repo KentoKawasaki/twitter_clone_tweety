@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                 </div>
                             </li>
-                            <li><label for="pop-up-tweet">Tweet</label></li>
+                            <li><label class="addTweetBtn">Tweet</label></li>
                         </ul>
                     </div>
                     <!-- nav right ends-->
@@ -219,6 +219,7 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
         <!--RIGHTER ENDS-->
+        <div class="popupTweet"></div>
     </div>
     <!--CONTAINER_WRAP ENDS-->
     </div>
