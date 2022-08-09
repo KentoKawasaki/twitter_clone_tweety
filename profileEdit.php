@@ -460,16 +460,18 @@ if (isset($_FILES['profileCover'])) {
 
     </div>
     <!-- ends wrapper -->
-    <script src="assets/js/baseURL.js"></script>
-    <script type="text/javascript" src="assets/js/like.js"></script>
-    <script type="text/javascript" src="assets/js/retweet.js"></script>
-    <script type="text/javascript" src="assets/js/popUpTweets.js"></script>
-    <script type="text/javascript" src="assets/js/delete.js"></script>
-    <script type="text/javascript" src="assets/js/comment.js"></script>
-    <script type="text/javascript" src="assets/js/popUpForm.js"></script>
-    <script type="text/javascript" src="assets/js/fetch.js"></script>
-    <script type="text/javascript" src="assets/js/search.js"></script>
-    <script type="text/javascript" src="assets/js/hashtag.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/baseURL.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/search.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/hashtag.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/like.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/retweet.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/popUpTweets.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/delete.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/comment.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/popUpForm.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/fetch.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/follow.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/messages.js"></script>
 </body>
 
 </html>
