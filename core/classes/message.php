@@ -34,7 +34,7 @@ class Message extends User {
                                 </div>
                                 <div class="msg-btn">
                                     <a><i class="fa fa-ban" aria-hidden="true"></i></a>
-                                    <a class="deleteMsg" data-user="'.$message->user_id.'"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <a class="deleteMsg" data-message="'.$message->messageID.'"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -53,13 +53,20 @@ class Message extends User {
                                 </div>
                                 <div class="msg-btn-l">	
                                     <a><i class="fa fa-ban" aria-hidden="true"></i></a>
-                                    <a class="deleteMsg" data-user="'.$message->user_id.'"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <a class="deleteMsg" data-message="'.$message->messageID.'"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                         </div> 
                     <!--Main message BODY LEFT END-->';
             }
         }
+    }
+
+    public function deleteMsg($message_id, $user_id){
+        $stmt = $this->pdo->prepare("DELETE FROM `messages` WHERE `messageID` = :message_id AND `messageFrom` = :user_id OR `messageID` = :message_id AND `messageTo` = :user_id;");
+        $stmt->bindParam(":message_id", $message_id, PDO::PARAM_INT);
+        $stmt->bindParam(":user_id", $user_id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 }
 ?>

@@ -80,5 +80,22 @@ $(function () {
         }
       );
     });
+
+    $(document).on('click', '.deleteMsg', function(){
+      let message_id = $(this).data('message');
+      $('.message-del-inner').height('135px');
+
+      $(document).on('click', '.cancel', function(){
+        $('.message-del-inner').height('0px');
+      });
+
+      $(document).on('click', '.delete', function(){
+        $.post(baseURL + 'core/ajax/messages.php', {deleteMsg:message_id}, function(data){
+          $('.message-del-inner').height('0px');
+          getMessages();
+
+        });
+      });
+    })
   });
 });
