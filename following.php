@@ -264,6 +264,7 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/fetch.js"></script>
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/follow.js"></script>
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/messages.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/postMessage.js"></script>
 </body>
 
 </html>

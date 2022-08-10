@@ -442,6 +442,7 @@ if (isset($_FILES['profileCover'])) {
             <div class="in-right-wrap">
                 <!--==WHO TO FOLLOW==-->
                 <!-- HERE -->
+                <?php $getFromF->whoToFollow($user_id, $user_id); ?>
                 <!--==WHO TO FOLLOW==-->
 
                 <!--==TRENDS==-->
@@ -472,6 +473,7 @@ if (isset($_FILES['profileCover'])) {
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/fetch.js"></script>
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/follow.js"></script>
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/messages.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/postMessage.js"></script>
 </body>
 
 </html>

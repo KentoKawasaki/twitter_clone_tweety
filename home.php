@@ -246,6 +246,7 @@ if (isset($_POST['tweet'])) {
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/fetch.js"></script>
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/follow.js"></script>
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/messages.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/postMessage.js"></script>
     <!-- <script>
         document.addEventListener('DOMContentLoaded',() => {
             alert(baseURL);

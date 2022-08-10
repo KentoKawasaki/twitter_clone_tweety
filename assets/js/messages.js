@@ -34,17 +34,17 @@ $(function () {
       }
     );
 
-    const getMessages = function () {
+    globalThis.getMessages = function () {
       $.post(
         baseURL + "core/ajax/messages.php",
         { showChatMessage: get_id },
         function (data) {
-          $(".main-msg-inner").append(data);
+          $(".main-msg-inner").html(data);
           if (autoscroll) {
             scrolldown();
           }
 
-          console.log(window.innerHeight);
+          // console.log(window.innerHeight);
           $("#chat").on("scroll", function () {
             if ($(this).scrollTop() < window.innerHeight - $(this).height()) {
               autoscroll = false;
@@ -59,13 +59,13 @@ $(function () {
       );
     };
 
-    let timer = setInterval(getMessages, 1000);
+    let timer = setInterval(getMessages, 5000);
     getMessages();
 
     autoscroll = true;
 
     const scrolldown = function () {
-      console.log($("#chat"));
+      // console.log($("#chat"));
       $("#chat").scrollTop($("#chat")[0].scrollHeight);
     };
 

@@ -211,6 +211,7 @@ if(isset($_POST['submit'])){
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/popUpForm.js"></script>
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/delete.js"></script>
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/messages.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/postMessage.js"></script>
 </body>
 
 </html>
