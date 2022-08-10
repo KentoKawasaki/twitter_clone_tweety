@@ -139,7 +139,12 @@ class Tweet extends User
 
         foreach ($result as $trend) {
             if ($stmt = $this->pdo->prepare($sql)) {
-                $stmt->execute(array(':hashtag' => $trend));
+                try {
+                    $stmt->execute(array(':hashtag' => $trend));
+
+                } catch(PDOException $e){
+                    ;
+                }
             }
         }
     }
@@ -250,7 +255,7 @@ class Tweet extends User
     }
 
     public function trends(){
-        $stmt = $this->pdo->prepare("SELECT *, COUNT(`tweetID`) AS `tweetsCount` FROM `trends` INNER JOIN `tweets` ON `status` LIKE CONCAT('%#', `hashtag`, '%') GROUP BY `hashtag` ORDER BY `tweetID`");
+        $stmt = $this->pdo->prepare("SELECT *, COUNT(`tweetID`) AS `tweetsCount` FROM `trends` INNER JOIN `tweets` ON `status` LIKE CONCAT('%#', `hashtag`, '%') OR `retweetMsg` LIKE CONCAT('%#', `hashtag`, '%') GROUP BY `hashtag` ORDER BY `tweetID`");
         $stmt->execute();
         $trends = $stmt->fetchAll(PDO::FETCH_OBJ);
 
@@ -268,5 +273,21 @@ class Tweet extends User
                 </div>';
         }
         echo '</div></div>';
+    }
+
+    public function getTweetsByHash($hashtag){
+        $stmt = $this->pdo->prepare("SELECT * FROM `tweets` LEFT JOIN `users` ON `tweetBy` = `user_id` WHERE `status` LIKE :hashtag OR `retweetMsg` LIKE :hashtag;");
+        $stmt->bindValue(":hashtag", '%#'.$hashtag.'%', PDO::PARAM_STR);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function getUsersByHash($hashtag){
+        $stmt = $this->pdo->prepare("SELECT DISTINCT * FROM `tweets` INNER JOIN `users` ON `tweetBy` = `user_id` WHERE `status` LIKE :hashtag OR `retweetMsg` LIKE :hashtag GROUP BY `user_id`;");
+        $stmt->bindValue(":hashtag", '%#'.$hashtag.'%', PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 }
