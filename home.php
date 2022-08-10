@@ -153,6 +153,7 @@ if (isset($_POST['tweet'])) {
 
                             <!--==TRENDS==-->
                             <!---TRENDS HERE-->
+                            <?php $getFromT->trends(); ?>
                             <!--==TRENDS==-->
 
                         </div><!-- in left wrap-->
