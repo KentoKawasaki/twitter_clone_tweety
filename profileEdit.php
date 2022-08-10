@@ -447,6 +447,7 @@ if (isset($_FILES['profileCover'])) {
 
                 <!--==TRENDS==-->
                 <!-- HERE -->
+                <?php $getFromT->trends(); ?>
                 <!--==TRENDS==-->
             </div>
             <!-- in left wrap-->

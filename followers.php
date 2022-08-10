@@ -225,6 +225,7 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
                                         </ul>
                                     </div>
                                     <?php $getFromF->whoToFollow($user_id, $user_id); ?>
+                                    <?php $getFromT->trends(); ?>
                                 </div>
 
                             </div>

@@ -356,6 +356,7 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
 
                         <!--==TRENDS==-->
                         <!--Trends-->
+                        <?php $getFromT->trends(); ?>
                         <!--==TRENDS==-->
 
                     </div><!-- in right wrap-->
